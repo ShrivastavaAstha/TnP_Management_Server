@@ -63,18 +63,22 @@ app.delete("/delete/:id", async (req, res) => {
   }
 });
 //Student can also see job postings according to their branch and cgpa:
-app.get("/api/filteredjobs", async (req, res) => {
-  try {
-    const sortedstudent = await Job_MODEL.find(
-      { Branch_Eligibility: "ME", Minimum_CGPA_required: 6.5 },
-      {}
-    );
-    return res.json({ success: true, data: sortedstudent });
-  } catch (error) {
-    console.log(error);
-    return res.status(400).json({ success: false, error: error.message });
+app.get(
+  "/api/filteredjobs/:Branch_Eligibility/:Minimum_CGPA_required",
+  async (req, res) => {
+    try {
+      const { Branch_Eligibility, Minimum_CGPA_required } = req.params;
+      const sortedstudent = await Job_MODEL.find({
+        Branch_Eligibility: Branch_Eligibility,
+        Minimum_CGPA_required: { $lte: Minimum_CGPA_required },
+      });
+      return res.json({ success: true, data: sortedstudent });
+    } catch (error) {
+      console.log(error);
+      return res.status(400).json({ success: false, error: error.message });
+    }
   }
-});
+);
 //A student can't register in the same job twice:
 app.post("/api/studentdata", async (req, res) => {
   try {
