@@ -40,7 +40,7 @@ app.post("/api/jobinfo", async (req, res) => {
 app.put("/updateinjobdetails/:id", async (req, res) => {
   try {
     const data = await Job_MODEL.findByIdAndUpdate(req.params.id, {
-      No_Of_vacancy: 8,
+      Branch_Eligibility: "ECE",
     });
     return res.status(200).json({
       success: true,
@@ -70,7 +70,7 @@ app.get(
     try {
       const { Branch_Eligibility, Minimum_CGPA_required } = req.params;
       const sortedstudent = await Job_MODEL.find({
-        Branch_Eligibility: { Branch_Eligibility },
+        Branch_Eligibility: { $in: Branch_Eligibility },
         Minimum_CGPA_required: { $lte: Minimum_CGPA_required },
       });
       return res.json({ success: true, data: sortedstudent });
