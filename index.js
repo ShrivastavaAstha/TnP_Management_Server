@@ -165,28 +165,7 @@ app.get("/api/hiredone/:Job_Status", async (req, res) => {
     return res.status(400).json({ success: false, error: error.message });
   }
 });
-app.get("/api/shortlistedone", async (req, res) => {
-  try {
-    const sortedstudent = await REGISTRATION_MODEL.findOne({
-      Job_Status: "Shortlisted",
-    });
-    return res.json({ success: true, data: sortedstudent });
-  } catch (error) {
-    console.log(error);
-    return res.status(400).json({ success: false, error: error.message });
-  }
-});
-app.get("/api/rejectedone", async (req, res) => {
-  try {
-    const sortedstudent = await REGISTRATION_MODEL.findOne({
-      Job_Status: "Rejected",
-    });
-    return res.json({ success: true, data: sortedstudent });
-  } catch (error) {
-    console.log(error);
-    return res.status(400).json({ success: false, error: error.message });
-  }
-});
+
 //Tnp can see all the hired students for a company:
 app.get("/api/hiredincompany", async (req, res) => {
   try {
