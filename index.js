@@ -1,3 +1,4 @@
+//--------------------------------------TnP Management Server--------------------------------
 const express = require("express");
 const app = express();
 const { connectDatabase } = require("./connection/connect");
@@ -167,11 +168,12 @@ app.get("/api/hiredone/:Job_Status", async (req, res) => {
 });
 
 //Tnp can see all the hired students for a company:
-app.get("/api/hiredincompany", async (req, res) => {
+app.get("/api/hiredincompany/:Job_Status/:Job_Id", async (req, res) => {
+  const { Job_Status, Job_Id } = req.params;
   try {
     const sortedstudent = await REGISTRATION_MODEL.findOne({
-      Job_Status: "Hired",
-      Job_Id: 1001,
+      Job_Status,
+      Job_Id,
     });
     return res.json({ success: true, data: sortedstudent });
   } catch (error) {
