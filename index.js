@@ -69,7 +69,7 @@ app.get(
     try {
       const { Branch_Eligibility, Minimum_CGPA_required } = req.params;
       const sortedstudent = await Job_MODEL.find({
-        Branch_Eligibility: Branch_Eligibility,
+        Branch_Eligibility: { Branch_Eligibility },
         Minimum_CGPA_required: { $lte: Minimum_CGPA_required },
       });
       return res.json({ success: true, data: sortedstudent });
@@ -153,10 +153,11 @@ app.get("/api/getregisteredstu", async (req, res) => {
   }
 });
 //Tnp can see all the students hired/shortlisted/rejected:
-app.get("/api/hiredone", async (req, res) => {
+app.get("/api/hiredone/:Job_Status", async (req, res) => {
+  const { Job_Status } = req.params;
   try {
-    const sortedstudent = await REGISTRATION_MODEL.findOne({
-      Job_Status: "Hired",
+    const sortedstudent = await REGISTRATION_MODEL.find({
+      Job_Status,
     });
     return res.json({ success: true, data: sortedstudent });
   } catch (error) {
@@ -200,9 +201,10 @@ app.get("/api/hiredincompany", async (req, res) => {
   }
 });
 //Students must be able to view all the job postings applied:
-app.get("/api/appliedcompanies", async (req, res) => {
+app.get("/api/appliedcompanies/:Job_Id", async (req, res) => {
+  const { Job_Id } = req.params;
   try {
-    const sortedstudent = await Job_MODEL.findOne({ Job_Id: 1001 });
+    const sortedstudent = await Job_MODEL.find({ Job_Id });
     return res.json({ success: true, data: sortedstudent });
   } catch (error) {
     console.log(error);
