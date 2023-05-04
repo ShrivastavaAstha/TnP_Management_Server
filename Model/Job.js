@@ -6,7 +6,7 @@ const JobSchema = new mongoose.Schema({
   Job_location: String,
   Salary: String,
   No_Of_vacancy: Number,
-  Branch_Eligibility: String,
+  Branch_Eligibility: Array,
   Minimum_CGPA_required: Number,
   Deadline_Date_For_Registration: String,
 });

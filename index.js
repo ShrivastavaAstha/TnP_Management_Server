@@ -171,7 +171,7 @@ app.get("/api/hiredone/:Job_Status", async (req, res) => {
 app.get("/api/hiredincompany/:Job_Status/:Job_Id", async (req, res) => {
   const { Job_Status, Job_Id } = req.params;
   try {
-    const sortedstudent = await REGISTRATION_MODEL.findOne({
+    const sortedstudent = await REGISTRATION_MODEL.find({
       Job_Status,
       Job_Id,
     });
@@ -182,10 +182,10 @@ app.get("/api/hiredincompany/:Job_Status/:Job_Id", async (req, res) => {
   }
 });
 //Students must be able to view all the job postings applied:
-app.get("/api/appliedcompanies/:Job_Id", async (req, res) => {
-  const { Job_Id } = req.params;
+app.get("/api/appliedcompanies/:Email_id", async (req, res) => {
+  const { Email_id } = req.params;
   try {
-    const sortedstudent = await Job_MODEL.find({ Job_Id });
+    const sortedstudent = await REGISTRATION_MODEL.find({ Email_id });
     return res.json({ success: true, data: sortedstudent });
   } catch (error) {
     console.log(error);
